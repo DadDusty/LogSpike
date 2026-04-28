@@ -420,6 +420,7 @@
                 class:row-match={isMatch}
                 class:row-match-active={isActive}
                 role="option"
+                oncontextmenu={(e) => showRowMenu(e, line.number)}
                 style:height="{rowHeight}px"
                 style:line-height="{rowHeight}px"
                 style:grid-template-columns={viewMode === 'table' ? gridTemplateColumns : undefined}
