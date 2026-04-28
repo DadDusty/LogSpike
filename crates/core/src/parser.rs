@@ -89,16 +89,19 @@ pub fn parse(line: &str) -> Option<ParsedLine> {
 fn parse_plain(line: &str) -> Option<ParsedLine> {
     let level = detect_level(line);
     let timestamp = detect_timestamp(line);
-    if level.is_none() && timestamp.is_none() {
-        return None;
+    // Always return Some with extracted message if we found level or timestamp
+    // This ensures plain text logs are still searchable/displayable
+    if level.is_some() || timestamp.is_some() {
+        Some(ParsedLine {
+            level,
+            timestamp,
+            component: None,
+            source: None,
+            message: Some(line.to_string()),
+        })
+    } else {
+        None
     }
-    Some(ParsedLine {
-        level,
-        timestamp,
-        component: None,
-        source: None,
-        message: None,
-    })
 }
 
 fn parse_cmtrace(line: &str) -> Option<ParsedLine> {
