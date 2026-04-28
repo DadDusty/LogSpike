@@ -277,34 +277,17 @@
       return;
     }
 
-    if (!activePane.fileId && activePane.activeSessionType !== 'all') {
+    if (!activePane.fileId) {
+      status = "select a file to search";
       return;
     }
 
     try {
-      let hits: typeof import('./lib/api').default['search'] extends (...a: any[]) => Promise<infer R> ? R : never = [];
-
-      if (activePane.fileId) {
-        // Single file mode
-        hits = await runSearch(activePane.fileId, {
-          pattern: activePane.pattern,
-          regex: activePane.regex,
-          case_sensitive: activePane.caseSensitive,
-        });
-      } else if (activePane.activeSessionType === 'all') {
-        // Multi-file mode: search all open files and merge results
-        const allHits = await Promise.all(
-          openFiles.map(file =>
-            runSearch(file.id, {
-              pattern: activePane.pattern,
-              regex: activePane.regex,
-              case_sensitive: activePane.caseSensitive,
-            }).catch(() => [])
-          )
-        );
-        hits = allHits.flat();
-        hits.sort((a, b) => Number(a.line_number) - Number(b.line_number));
-      }
+      const hits = await runSearch(activePane.fileId, {
+        pattern: activePane.pattern,
+        regex: activePane.regex,
+        case_sensitive: activePane.caseSensitive,
+      });
 
       if (hits.length === 0) {
         status = "no matches";
