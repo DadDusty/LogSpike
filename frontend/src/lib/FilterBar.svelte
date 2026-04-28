@@ -151,8 +151,8 @@
     align-items: center;
     gap: 16px;
     padding: 8px 16px;
-    background: var(--bg);
-    border-bottom: 1px solid var(--border);
+    background: var(--color-filter-bar-bg);
+    border-bottom: 1px solid var(--color-border);
     flex-shrink: 0;
   }
   .search-form {
@@ -185,7 +185,7 @@
   }
   .match-count {
     font-size: 11px;
-    color: var(--text-dim);
+    color: var(--color-text-secondary);
     font-weight: 600;
     white-space: nowrap;
   }
@@ -195,12 +195,12 @@
     border-radius: 3px;
     padding: 2px 4px;
     font-size: 10px;
-    color: var(--text-dim);
+    color: var(--color-text-secondary);
     cursor: pointer;
   }
   .nav-btn:hover:not(:disabled) {
-    background: var(--border-dim);
-    color: var(--text);
+    background: var(--color-border-subtle);
+    color: var(--color-text-primary);
   }
   .nav-btn:disabled {
     opacity: 0.4;
@@ -213,21 +213,23 @@
     padding: 2px 6px;
     font-size: 11px;
     font-weight: 600;
-    color: var(--text-dim);
+    color: var(--color-text-secondary);
     cursor: pointer;
   }
   .toggle-btn:hover {
-    background: var(--border-dim);
+    background: var(--color-border-subtle);
+    color: var(--color-text-primary);
   }
   .toggle-btn.active {
-    background: var(--accent-dim);
-    color: var(--accent);
+    background: rgba(91, 163, 255, 0.15);
+    color: var(--color-accent);
+    border: 1px solid var(--color-accent);
   }
 
   .divider {
     width: 1px;
     height: 20px;
-    background: var(--border);
+    background: var(--color-border);
   }
 
   .level-pills {
@@ -238,8 +240,8 @@
     padding: 4px 10px;
     border: none;
     border-radius: 4px;
-    background: var(--border-dim);
-    color: var(--text-dim);
+    background: var(--color-border-subtle);
+    color: var(--color-text-secondary);
     font-size: 11px;
     font-weight: 700;
     cursor: pointer;
@@ -248,12 +250,12 @@
   .pill.active {
     color: white;
   }
-  .pill.level-trace.active { background: var(--lv-trace); }
-  .pill.level-debug.active { background: var(--lv-debug); }
-  .pill.level-info.active  { background: var(--lv-info); }
-  .pill.level-warn.active  { background: var(--lv-warn); }
-  .pill.level-error.active { background: var(--lv-error); }
-  .pill.level-fatal.active { background: var(--lv-fatal); }
+  .pill.level-trace.active { background: #636366; }
+  .pill.level-debug.active { background: var(--color-accent); }
+  .pill.level-info.active  { background: #7eb6ff; }
+  .pill.level-warn.active  { background: #ffd60a; color: #1a1a1e; }
+  .pill.level-error.active { background: #ff453a; }
+  .pill.level-fatal.active { background: #ff453a; }
 
   .pill.bookmark-pill {
     padding: 4px 8px;
@@ -262,12 +264,12 @@
     justify-content: center;
   }
   .pill.bookmark-pill.active {
-    background: rgb(255, 215, 0);
+    background: var(--color-following);
     color: #000;
   }
 
   .pill:not(.active):hover {
-    background: var(--border);
-    color: var(--text);
+    background: var(--color-border);
+    color: var(--color-text-primary);
   }
 </style>

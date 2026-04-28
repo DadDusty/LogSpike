@@ -125,8 +125,8 @@
 <style>
   .sidebar {
     width: 240px;
-    background: var(--bg-elevated);
-    border-right: 1px solid var(--border);
+    background: var(--color-sidebar-bg);
+    border-right: 1px solid var(--color-border);
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
@@ -137,6 +137,16 @@
     overflow-y: auto;
     padding: 12px 0;
     scrollbar-gutter: stable;
+  }
+  .sidebar-content::-webkit-scrollbar {
+    width: 8px;
+  }
+  .sidebar-content::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .sidebar-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 4px;
   }
   .section {
     margin-bottom: 16px;
@@ -162,7 +172,7 @@
     height: 100%;
   }
   .section-header:hover {
-    background: var(--border-dim);
+    background: var(--color-sidebar-hover);
   }
   .close-all-btn {
     background: none;
@@ -170,7 +180,7 @@
     padding: 0 8px;
     cursor: pointer;
     font-size: 14px;
-    color: var(--text-dim);
+    color: var(--color-text-secondary);
     opacity: 0;
     transition: opacity 0.1s;
     height: 100%;
@@ -180,7 +190,7 @@
     flex-shrink: 0;
   }
   .close-all-btn:hover {
-    color: var(--lv-error);
+    color: var(--color-level-error-badge);
     opacity: 1;
   }
   .section-header-wrapper:hover .close-all-btn {
@@ -188,7 +198,7 @@
   }
   .chevron {
     font-size: 16px;
-    color: var(--text);
+    color: var(--color-text-primary);
     transition: transform 0.2s ease;
     min-width: 16px;
     min-height: 16px;
@@ -204,7 +214,7 @@
   .section-title {
     font-size: 11px;
     font-weight: 700;
-    color: var(--text-dim);
+    color: var(--color-text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.03em;
   }
@@ -212,7 +222,7 @@
     padding: 4px 16px;
     font-size: 11px;
     font-weight: 700;
-    color: var(--text-dim);
+    color: var(--color-text-secondary);
     text-transform: uppercase;
   }
   .section-item {
@@ -227,14 +237,14 @@
     border-radius: 8px;
     cursor: pointer;
     text-align: left;
-    color: var(--text);
+    color: var(--color-text-primary);
   }
   .section-item:hover:not(.active) {
-    background: var(--border-dim);
+    background: var(--color-sidebar-hover);
   }
   .section-item.active {
-    background: var(--accent);
-    color: white;
+    background: var(--color-sidebar-active);
+    color: var(--color-accent);
   }
   .icon { font-size: 18px; line-height: 1; }
   .icon-file { font-size: 14px; opacity: 0.6; margin-top: 2px; }
@@ -259,20 +269,18 @@
     position: relative;
   }
   li.active {
-    background: rgba(0, 113, 227, 0.25);
+    background: var(--color-sidebar-active);
     border-radius: 8px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(0, 113, 227, 0.4);
   }
   li.active .name,
   li.active .detail,
   li.active .icon-file {
-    color: var(--accent);
+    color: var(--color-accent);
     opacity: 1;
     font-weight: 500;
   }
   li:not(.active):hover {
-    background: var(--border-dim);
+    background: var(--color-sidebar-hover);
   }
   .file-item {
     flex: 1;
@@ -296,7 +304,7 @@
   }
   .detail {
     font-size: 9px;
-    color: var(--text-muted);
+    color: var(--color-text-tertiary);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

@@ -27,6 +27,10 @@
   let height = $state(24);
   let resizeObserver: ResizeObserver | undefined;
 
+  function getComputedColor(variable: string): string {
+    return getComputedStyle(document.documentElement).getPropertyValue(variable).trim();
+  }
+
   function redraw() {
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -37,18 +41,20 @@
     canvas.height = height * dpr;
     ctx.scale(dpr, dpr);
 
-    // Determine theme for colors
-    let isDark = theme === 'dark';
-    if (theme === 'system') {
-      isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    }
+    // Get colors from CSS variables
+    const bgColor = getComputedColor('--color-filter-bar-bg');
+    const borderColor = getComputedColor('--color-border');
+    const errorColor = getComputedColor('--color-level-error-badge');
+    const warningColor = getComputedColor('--color-level-warning-badge');
+    const searchColor = getComputedColor('--color-search-highlight-active');
+    const followingColor = getComputedColor('--color-following');
 
     // Background
-    ctx.fillStyle = 'var(--bg-elevated)';
+    ctx.fillStyle = bgColor;
     ctx.fillRect(0, 0, width, height);
 
     // Border
-    ctx.strokeStyle = 'var(--border)';
+    ctx.strokeStyle = borderColor;
     ctx.lineWidth = 1;
     ctx.strokeRect(0, 0, width, height);
 
@@ -60,41 +66,36 @@
       levelMap.set(marker.line, marker.level);
     }
 
-    const bookmarkSet = new Set(bookmarks);
-    const matchSet = new Set(searchMatches);
-
     // Draw: horizontal strip where each column represents a line
     for (let x = 0; x < width; x++) {
       const lineNum = Math.floor((x / width) * lineCount);
       if (lineNum >= lineCount) break;
 
-      let color = isDark ? 'rgb(51, 51, 51)' : 'rgb(200, 200, 200)'; // default dim
+      let color = '#666666';
 
       // Check level
       if (levelMap.has(lineNum)) {
         const level = levelMap.get(lineNum)!;
-        if (level === 'error') {
-          color = isDark ? 'rgb(255, 59, 48)' : 'rgb(255, 95, 80)'; // red
-        } else if (level === 'fatal') {
-          color = isDark ? 'rgb(191, 90, 242)' : 'rgb(200, 130, 255)'; // purple
+        if (level === 'error' || level === 'fatal') {
+          color = errorColor;
         } else if (level === 'warn') {
-          color = isDark ? 'rgb(255, 159, 10)' : 'rgb(255, 180, 60)'; // orange
+          color = warningColor;
         }
       }
 
       ctx.fillStyle = color;
-      ctx.fillRect(x, 0, 1, height); // full height bar
+      ctx.fillRect(x, 0, 1, height);
     }
 
-    // Draw search matches as blue overlay
-    ctx.fillStyle = isDark ? 'rgba(0, 113, 227, 0.6)' : 'rgba(0, 113, 227, 0.4)';
+    // Draw search matches as highlight overlay
+    ctx.fillStyle = searchColor;
     for (const match of searchMatches) {
       const x = (match / lineCount) * width;
       ctx.fillRect(x, 0, 1, height);
     }
 
-    // Draw bookmarks as gold markers
-    ctx.fillStyle = isDark ? 'rgb(255, 215, 0)' : 'rgb(255, 195, 0)';
+    // Draw bookmarks as bright markers
+    ctx.fillStyle = followingColor;
     for (const line of bookmarks) {
       const x = (line / lineCount) * width;
       ctx.fillRect(x, 0, 2, height);
@@ -166,6 +167,6 @@
     height: 24px;
     display: block;
     cursor: pointer;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--color-border);
   }
 </style>

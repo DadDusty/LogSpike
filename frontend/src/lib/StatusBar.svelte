@@ -33,14 +33,14 @@
 <style>
   .status-bar {
     height: 28px;
-    background: var(--bg-elevated);
-    border-top: 1px solid var(--border);
+    background: var(--color-status-bar-bg);
+    border-top: 1px solid var(--color-border);
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 12px;
     font-size: 11px;
-    color: var(--text-dim);
+    color: var(--color-text-secondary);
     flex-shrink: 0;
   }
   .left, .right {
@@ -60,7 +60,7 @@
   .divider {
     width: 1px;
     height: 14px;
-    background: var(--border);
+    background: var(--color-border);
   }
   .action-btn {
     background: none;
@@ -70,13 +70,13 @@
     font-size: 11px;
     font-weight: 600;
     cursor: pointer;
-    color: var(--text);
+    color: var(--color-text-primary);
   }
   .action-btn:hover {
-    background: var(--border-dim);
+    background: var(--color-border-subtle);
   }
   .action-btn.active {
-    color: var(--accent);
-    background: var(--accent-dim);
+    color: var(--color-following);
+    border-color: var(--color-following);
   }
 </style>

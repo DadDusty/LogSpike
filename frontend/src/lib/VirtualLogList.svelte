@@ -524,8 +524,8 @@
   .header-row {
     display: flex;
     align-items: center;
-    background: var(--bg-elevated);
-    border-bottom: 1px solid var(--border);
+    background: var(--color-filter-bar-bg);
+    border-bottom: 1px solid var(--color-border);
     z-index: 10;
     gap: 8px;
     padding: 0 12px;
@@ -552,7 +552,7 @@
     text-align: left;
     font-size: 11px;
     font-weight: 700;
-    color: var(--text-dim);
+    color: var(--color-text-secondary);
     text-transform: uppercase;
     cursor: pointer;
     overflow: hidden;
@@ -565,12 +565,12 @@
     height: 100%;
   }
   .h-col:hover {
-    color: var(--text);
+    color: var(--color-text-primary);
   }
   span.h-col { cursor: default; }
   .h-bookmark {
     justify-content: center;
-    color: var(--text-muted);
+    color: var(--color-text-tertiary);
   }
   .h-bookmark svg {
     width: 14px;
@@ -595,20 +595,20 @@
     display: block;
     width: 2px;
     height: 12px;
-    background: var(--border-dim);
+    background: var(--color-border-subtle);
     border-radius: 1px;
     margin: 0 1px;
-    box-shadow: 2px 0 0 var(--border-dim);
+    box-shadow: 2px 0 0 var(--color-border-subtle);
   }
   .resize-handle:hover::before {
-    background: var(--text-dim);
-    box-shadow: 2px 0 0 var(--text-dim);
+    background: var(--color-text-secondary);
+    box-shadow: 2px 0 0 var(--color-text-secondary);
   }
 
   .settings-btn {
     background: none;
     border: none;
-    color: var(--text-dim);
+    color: var(--color-text-secondary);
     cursor: pointer;
     font-size: 14px;
     padding: 6px 8px;
@@ -619,15 +619,15 @@
     width: 24px;
   }
   .settings-btn:hover {
-    color: var(--text);
+    color: var(--color-text-primary);
   }
 
   .viewport {
     position: relative;
     flex: 1;
     overflow: auto;
-    background: var(--bg);
-    font-family: var(--mono);
+    background: var(--color-table-bg);
+    font-family: var(--font-mono);
     font-size: 12px;
     contain: strict;
   }
@@ -635,17 +635,17 @@
     width: 10px;
   }
   .viewport::-webkit-scrollbar-track {
-    background: var(--bg);
+    background: var(--color-table-bg);
   }
   .viewport::-webkit-scrollbar-thumb {
-    background: var(--border);
+    background: var(--color-border);
     border-radius: 5px;
   }
   .viewport::-webkit-scrollbar-thumb:hover {
-    background: var(--border-dim);
+    background: var(--color-border-subtle);
   }
   .viewport {
-    scrollbar-color: var(--border) var(--bg);
+    scrollbar-color: var(--color-border) var(--color-table-bg);
     scrollbar-width: thin;
   }
   .spacer { position: relative; width: 100%; }
@@ -660,8 +660,8 @@
     padding: 0 12px;
     white-space: pre;
     overflow: hidden;
-    border-bottom: 1px solid var(--border-dim);
-    background: var(--bg);
+    border-bottom: 1px solid var(--color-border-subtle);
+    background: var(--color-table-bg);
     contain: layout style paint;
     animation: fadeIn 100ms ease-out;
   }
@@ -669,12 +669,12 @@
     from { opacity: 0.8; }
     to { opacity: 1; }
   }
-  .row:nth-child(even):not(.level-warn):not(.level-error):not(.level-fatal) {
-    background: var(--bg-row-alt);
+  .row:hover:not(.level-warn):not(.level-error):not(.level-fatal):not(.level-critical) {
+    background: var(--color-table-row-hover);
   }
 
   .ln {
-    color: var(--text-muted);
+    color: var(--color-text-tertiary);
     text-align: right;
     min-width: 5ch;
     user-select: none;
@@ -682,26 +682,22 @@
     font-size: 11px;
   }
   .text { flex: 1 1 auto; min-width: 0; }
-  .placeholder { background: var(--bg-elevated); opacity: 0.2; }
+  .placeholder { background: var(--color-card-bg); opacity: 0.2; }
 
-  .level-trace { color: var(--lv-trace); }
-  .level-debug { color: var(--lv-debug); }
-  .level-info  { color: var(--lv-info); }
+  .level-trace { color: var(--color-text-tertiary); }
+  .level-debug { color: var(--color-text-secondary); }
+  .level-info  { color: var(--color-text-primary); }
   .level-warn  {
-    color: var(--lv-warn);
-    background: rgba(255, 159, 10, 0.12);
-    border-left: 2px solid rgba(255, 159, 10, 0.4);
+    color: var(--color-level-warning-text);
+    background: var(--color-level-warning-bg);
   }
   .level-error {
-    color: var(--lv-error);
-    background: rgba(255, 59, 48, 0.15);
-    border-left: 2px solid var(--lv-error);
+    color: var(--color-level-error-text);
+    background: var(--color-level-error-bg);
   }
-  .level-fatal {
-    color: var(--lv-fatal);
-    background: rgba(191, 90, 242, 0.18);
-    border-left: 2px solid var(--lv-fatal);
-    font-weight: 600;
+  .level-critical {
+    color: var(--color-level-critical-text);
+    background: var(--color-level-critical-bg);
   }
 
   .row-table {
@@ -709,13 +705,13 @@
     gap: 12px;
     align-items: center;
   }
-  
+
   .col {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  .col.timestamp { color: var(--text-dim); }
+  .col.timestamp { color: var(--color-text-timestamp); }
   .col.level-badge {
     display: inline-flex;
     align-items: center;
@@ -723,22 +719,23 @@
     font-size: 8px;
     font-weight: 800;
     height: 18px;
-    width: 32px;
+    min-width: 40px;
+    padding: 0 6px;
     border-radius: 3px;
-    background: var(--border-dim);
-    color: inherit;
+    background: var(--color-border-subtle);
+    color: var(--color-text-secondary);
     letter-spacing: 0.03em;
   }
-  .col.component { color: var(--text-dim); }
-  .col.source { color: var(--text-muted); font-size: 11px; }
-  .col.message { color: var(--text); }
+  .col.component { color: var(--color-text-component); }
+  .col.source { color: var(--color-text-tertiary); font-size: 11px; }
+  .col.message { color: var(--color-text-primary); }
 
   .bookmark-btn {
     background: none;
     border: none;
     padding: 0;
     cursor: pointer;
-    color: var(--text-muted);
+    color: var(--color-text-tertiary);
     font-size: 14px;
     display: flex;
     align-items: center;
@@ -746,19 +743,18 @@
     height: 100%;
   }
   .bookmark-btn:hover {
-    color: var(--accent);
+    color: var(--color-accent);
   }
   .bookmark-btn.bookmarked {
-    color: var(--accent);
+    color: var(--color-accent);
   }
 
   .row-match-active {
-    background: rgba(224, 175, 0, 0.2) !important;
-    box-shadow: inset 0 0 0 1px rgba(224, 175, 0, 0.4);
+    background: var(--color-search-highlight-active) !important;
   }
 
   .row-match {
-    background: rgba(0, 113, 227, 0.08) !important;
+    background: var(--color-search-highlight) !important;
   }
 
   .context-menu-backdrop {
@@ -773,8 +769,8 @@
   .context-menu {
     position: fixed;
     z-index: 1000;
-    background: var(--bg-elevated);
-    border: 1px solid var(--border);
+    background: var(--color-card-bg);
+    border: 1px solid var(--color-border);
     border-radius: 6px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     min-width: 160px;
@@ -789,12 +785,12 @@
     text-align: left;
     cursor: pointer;
     font-size: 12px;
-    color: var(--text);
+    color: var(--color-text-primary);
   }
 
   .context-menu button:hover {
-    background: var(--accent-dim);
-    color: var(--accent);
+    background: var(--color-table-row-hover);
+    color: var(--color-accent);
   }
 
   .modal-backdrop {
@@ -816,8 +812,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 100;
-    background: var(--bg-elevated);
-    border: 1px solid var(--border);
+    background: var(--color-card-bg);
+    border: 1px solid var(--color-border);
     border-radius: 8px;
     padding: 14px;
     min-width: 280px;
@@ -829,7 +825,7 @@
     margin: 0 0 10px 0;
     font-size: 14px;
     font-weight: 600;
-    color: var(--text);
+    color: var(--color-text-primary);
   }
 
   .column-list {
@@ -852,7 +848,7 @@
   }
 
   .column-toggle:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--color-table-row-hover);
   }
 
   .column-toggle input {
@@ -865,7 +861,7 @@
   }
 
   .column-toggle span {
-    color: var(--text);
+    color: var(--color-text-primary);
     font-size: 12px;
   }
 
@@ -886,16 +882,16 @@
   }
 
   .btn-reset {
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--text);
+    background: var(--color-border);
+    color: var(--color-text-primary);
   }
 
   .btn-reset:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: var(--color-border-subtle);
   }
 
   .btn-close {
-    background: var(--accent, #0066ff);
+    background: var(--color-accent);
     color: white;
   }
 

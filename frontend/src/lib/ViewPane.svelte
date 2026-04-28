@@ -118,7 +118,7 @@
     display: flex;
     flex-direction: column;
     min-width: 0;
-    background: var(--bg);
+    background: var(--color-table-bg);
   }
   .pane-content {
     flex: 1;
@@ -130,7 +130,7 @@
     align-items: center;
     justify-content: center;
     height: 100%;
-    color: var(--text-dim);
+    color: var(--color-text-secondary);
     font-size: 13px;
   }
 </style>
