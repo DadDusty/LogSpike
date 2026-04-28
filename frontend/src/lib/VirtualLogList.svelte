@@ -184,6 +184,10 @@
 
   const searchMatchSet = $derived(new Set(searchMatches ?? []));
   const bookmarkSet = $derived(new Set(bookmarks ?? []));
+  // When matchesOnly is active, base scroller calculations on filtered count
+  const effectiveLineCount = $derived(
+    matchesOnly && searchMatches.length > 0 ? searchMatches.length : lineCount
+  );
 
   const gridTemplateColumns = $derived(
     columns
@@ -206,6 +210,10 @@
     // Re-render when matchesOnly or bookmark mode changes to apply filters
     void matchesOnly;
     void bookmarkMode;
+    // Scroll to top when matchesOnly activates to show first match
+    if (matchesOnly && searchMatches.length > 0 && viewport) {
+      viewport.scrollTop = 0;
+    }
     refresh();
   });
 
@@ -224,7 +232,7 @@
     }
   });
 
-  const spacerHeight = $derived(Math.min(lineCount * rowHeight, MAX_VIRTUAL_PX));
+  const spacerHeight = $derived(Math.min(effectiveLineCount * rowHeight, MAX_VIRTUAL_PX));
   const remappingActive = $derived(lineCount * rowHeight > MAX_VIRTUAL_PX);
 
   function topLineForScroll(scrollTop: number): number {
