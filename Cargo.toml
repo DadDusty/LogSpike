@@ -1,0 +1,51 @@
+[workspace]
+resolver = "2"
+members = ["crates/core", "crates/app"]
+
+# Centralised dependency versions so the two crates stay in lock-step.
+[workspace.dependencies]
+anyhow      = "1"
+thiserror   = "1"
+serde       = { version = "1", features = ["derive"] }
+serde_json  = "1"
+memmap2     = "0.9"
+memchr      = "2.7"
+regex       = "1.10"
+aho-corasick = "1.1"
+notify      = "6"
+parking_lot = "0.12"
+crossbeam-channel = "0.5"
+rayon       = "1.10"
+tokio       = { version = "1", features = ["rt-multi-thread", "macros", "sync", "time", "fs"] }
+tracing     = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt"] }
+dashmap     = "6"
+
+[workspace.package]
+version    = "0.1.0"
+edition    = "2021"
+license    = "MIT"
+authors    = ["DadDusty"]
+repository = "https://github.com/DadDusty/logspike"
+rust-version = "1.78"
+
+# Release profile tuned for a small, fast desktop binary.
+# - LTO + single codegen unit lets the compiler inline aggressively across crates.
+# - panic = "abort" cuts unwind tables (~10% smaller binary, slightly faster).
+# - strip removes debug symbols from the shipped artefact.
+[profile.release]
+opt-level     = 3
+lto           = "fat"
+codegen-units = 1
+panic         = "abort"
+strip         = "symbols"
+incremental   = false
+
+# A separate "dev-fast" profile so iterative builds stay snappy without
+# sacrificing debuggability the way release does.
+[profile.dev]
+opt-level = 1
+debug     = "limited"
+
+[profile.dev.package."*"]
+opt-level = 3

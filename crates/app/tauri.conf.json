@@ -1,0 +1,44 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "logspike",
+  "version": "0.1.0",
+  "identifier": "dev.logspike.app",
+  "build": {
+    "beforeDevCommand": "npm --prefix /Users/andreas.makslahti/private-repos/logspike/frontend run dev",
+    "beforeBuildCommand": "npm --prefix /Users/andreas.makslahti/private-repos/logspike/frontend run build",
+    "devUrl": "http://localhost:5173",
+    "frontendDist": "/Users/andreas.makslahti/private-repos/logspike/frontend/dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "logspike",
+        "width": 1280,
+        "height": 800,
+        "minWidth": 720,
+        "minHeight": 480,
+        "fullscreen": false,
+        "resizable": true,
+        "decorations": true
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "category": "DeveloperTool",
+    "shortDescription": "Fast multi-platform log viewer.",
+    "longDescription": "logspike is a fast, modern, cross-platform log viewer in the spirit of CMTrace, with virtualised rendering, regex search, and live tail."
+  },
+  "plugins": {}
+}

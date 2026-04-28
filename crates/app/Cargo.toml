@@ -1,0 +1,43 @@
+[package]
+name        = "logspike"
+description = "logspike — a fast, modern multi-platform log viewer."
+version.workspace      = true
+edition.workspace      = true
+license.workspace      = true
+repository.workspace   = true
+rust-version.workspace = true
+default-run = "logspike"
+
+[lib]
+# Tauri 2 idiom: business logic lives in a library so the desktop binary and
+# the (future) mobile target can share it.
+name       = "logspike_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[[bin]]
+name = "logspike"
+path = "src/main.rs"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri              = { version = "2", features = [] }
+tauri-plugin-dialog = "2"
+
+logspike-core     = { path = "../core" }
+
+anyhow            = { workspace = true }
+thiserror         = { workspace = true }
+serde             = { workspace = true }
+serde_json        = { workspace = true }
+tokio             = { workspace = true }
+tracing           = { workspace = true }
+tracing-subscriber = { workspace = true }
+parking_lot       = { workspace = true }
+dashmap           = { workspace = true }
+
+[features]
+# Tauri's default-features pull in some nice-to-haves; we opt in explicitly.
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]
