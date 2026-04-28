@@ -41,7 +41,6 @@
     activeMatchIdx: number;
     bookmarks: number[];
     bookmarkMode: boolean;
-    matchesOnly: boolean;
     levelMarkers: { line: number; level: LogLevel }[];
     liveMode: boolean;
   }
@@ -62,7 +61,6 @@
       activeMatchIdx: 0,
       bookmarks: [],
       bookmarkMode: false,
-      matchesOnly: false,
       levelMarkers: [],
       liveMode: false,
     };
@@ -217,7 +215,6 @@
     activePane.pattern = "";
     activePane.regex = false;
     activePane.caseSensitive = false;
-    activePane.matchesOnly = false;
     activePane.bookmarkMode = false;
     activePane.searchMatches = [];
     activePane.activeMatchIdx = 0;
@@ -295,9 +292,17 @@
         activePane.activeMatchIdx = 0;
         return;
       }
-      activePane.searchMatches = hits.map(h => h.line_number);
+      // Deduplicate to one match per line (keep first occurrence)
+      const uniqueLines = new Set<number>();
+      activePane.searchMatches = hits
+        .map(h => h.line_number)
+        .filter(lineNum => {
+          if (uniqueLines.has(lineNum)) return false;
+          uniqueLines.add(lineNum);
+          return true;
+        });
       activePane.activeMatchIdx = 0;
-      status = `${hits.length.toLocaleString()} matches`;
+      status = `${activePane.searchMatches.length.toLocaleString()} lines match (${hits.length.toLocaleString()} total occurrences)`;
       listRef?.scrollToLine(hits[0].line_number);
     } catch (err) {
       status = String(err);
@@ -461,12 +466,6 @@
     void activePane.pattern;
     void activePane.regex;
     void activePane.caseSensitive;
-    // Auto-enable matchesOnly when there's a search pattern, disable when empty
-    if (activePane.pattern) {
-      activePane.matchesOnly = true;
-    } else {
-      activePane.matchesOnly = false;
-    }
     doSearch().catch(err => console.error("search error:", err));
   });
 
@@ -521,7 +520,6 @@
         bind:caseSensitive={activePane.caseSensitive}
         bind:selectedLevels={activePane.selectedLevels}
         bind:bookmarkMode={activePane.bookmarkMode}
-        bind:matchesOnly={activePane.matchesOnly}
         matchCount={activePane.searchMatches.length}
         activeMatchIdx={activePane.activeMatchIdx + 1}
         bookmarkCount={activePane.bookmarks.length}
@@ -543,7 +541,6 @@
             activeMatchIdx={activePane.activeMatchIdx}
             bookmarks={activePane.bookmarks}
             bookmarkMode={activePane.bookmarkMode}
-            matchesOnly={activePane.matchesOnly}
             onBookmarkToggle={toggleBookmark}
             onLinesLoaded={handleLinesLoaded}
             onClearFilters={clearAllFilters}

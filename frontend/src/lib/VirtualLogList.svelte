@@ -16,7 +16,6 @@
     activeMatchIdx = 0,
     bookmarks = [],
     bookmarkMode = false,
-    matchesOnly = false,
     onBookmarkToggle = () => {},
     onLinesLoaded = () => {},
     onClearFilters = () => {},
@@ -32,7 +31,6 @@
     activeMatchIdx?: number;
     bookmarks?: number[];
     bookmarkMode?: boolean;
-    matchesOnly?: boolean;
     onBookmarkToggle?: (line: number) => void;
     onLinesLoaded?: (lines: { line: number; level: string }[]) => void;
     onClearFilters?: () => void;
@@ -184,11 +182,9 @@
 
   const searchMatchSet = $derived(new Set(searchMatches ?? []));
   const bookmarkSet = $derived(new Set(bookmarks ?? []));
-  // When matchesOnly is active, base scroller calculations on filtered count
-  const effectiveLineCount = $derived(
-    matchesOnly && searchMatches.length > 0 ? searchMatches.length : lineCount
-  );
 
+  // Get the active match line number
+  const activeMatchLine = $derived(searchMatches?.[activeMatchIdx] ?? null);
   const gridTemplateColumns = $derived(
     columns
       .filter(c => c.visible)
@@ -206,15 +202,15 @@
     refresh();
   });
 
+  let prevSearchLength = 0;
+
   $effect(() => {
-    // Re-render when matchesOnly or bookmark mode changes to apply filters
-    void matchesOnly;
-    void bookmarkMode;
-    // Scroll to top when matchesOnly activates to show first match
-    if (matchesOnly && searchMatches.length > 0 && viewport) {
-      viewport.scrollTop = 0;
+    // Auto-jump only when search results change (new search), not on navigation
+    const currentLength = searchMatches.length;
+    if (currentLength > 0 && prevSearchLength === 0 && activeMatchLine !== null && viewport) {
+      scrollToLine(activeMatchLine);
     }
-    refresh();
+    prevSearchLength = currentLength;
   });
 
   $effect(() => {
@@ -232,7 +228,7 @@
     }
   });
 
-  const spacerHeight = $derived(Math.min(effectiveLineCount * rowHeight, MAX_VIRTUAL_PX));
+  const spacerHeight = $derived(Math.min(lineCount * rowHeight, MAX_VIRTUAL_PX));
   const remappingActive = $derived(lineCount * rowHeight > MAX_VIRTUAL_PX);
 
   function topLineForScroll(scrollTop: number): number {
@@ -299,21 +295,24 @@
   }
 
   function refresh() {
-    if (lineCount === 0 || viewportHeight === 0) {
+    if (viewportHeight === 0 || lineCount === 0) {
       rendered = [];
       firstLine = 0;
       lastLine = 0;
       return;
     }
+
     const top = topLineForScroll(scrollTop);
     const visible = Math.max(1, Math.ceil(viewportHeight / rowHeight));
     const start = Math.max(0, top - OVERSCAN);
     const end = Math.min(lineCount, top + visible + OVERSCAN);
+
     firstLine = start;
     lastLine = end;
     renderOffsetPx = remappingActive
       ? scrollTop - (top - start) * rowHeight
       : start * rowHeight;
+
     const { lines, missing } = cache.slice(start, end);
     rendered = lines;
     onActiveChange(top, top + visible);
@@ -414,16 +413,18 @@
     </div>
   {/if}
 
-  <div bind:this={viewport} class="viewport" onscroll={onScroll}>
+  <div
+    bind:this={viewport}
+    class="viewport"
+    onscroll={onScroll}
+  >
     <div class="spacer" style:height="{spacerHeight}px">
       <div class="rows" style:transform="translate3d(0,{renderOffsetPx}px,0)">
         {#each rendered as line, i (firstLine + i)}
           {#if line && (!bookmarkMode || bookmarkSet.has(line.number))}
-            {#if !matchesOnly || searchMatchSet.has(line.number)}
-              {@const isMatch = searchMatchSet.has(line.number)}
-              {@const activeMatchLine = searchMatches?.[activeMatchIdx]}
-              {@const isActive = activeMatchLine !== undefined && line.number === activeMatchLine}
-              <div
+            {@const isMatch = searchMatchSet.has(line.number)}
+            {@const isActive = activeMatchLine !== null && line.number === activeMatchLine}
+            <div
                 class="row {viewMode === 'table' ? 'row-table' : ''} level-{line.parsed?.level ?? 'plain'}"
                 class:row-match={isMatch}
                 class:row-match-active={isActive}
@@ -473,9 +474,6 @@
                   <span class="text">{line.text}</span>
                 {/if}
               </div>
-            {:else if !matchesOnly}
-              <div class="row placeholder" style:height="{rowHeight}px"></div>
-            {/if}
           {/if}
         {/each}
       </div>
@@ -637,7 +635,6 @@
     background: var(--color-table-bg);
     font-family: var(--font-mono);
     font-size: 12px;
-    contain: strict;
   }
   .viewport::-webkit-scrollbar {
     width: 10px;
@@ -661,6 +658,7 @@
     position: absolute;
     top: 0; left: 0; right: 0;
     will-change: transform;
+    background: var(--color-table-bg);
   }
   .row {
     display: flex;
@@ -763,6 +761,8 @@
 
   .row-match-active {
     background: var(--color-search-highlight-active) !important;
+    box-shadow: inset 0 0 0 2px var(--color-search-highlight-active), 0 0 8px rgba(255, 200, 87, 0.4) !important;
+    position: relative;
   }
 
   .row-match {

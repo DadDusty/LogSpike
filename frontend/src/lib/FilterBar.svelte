@@ -10,7 +10,6 @@
     activeMatchIdx = 0,
     bookmarkCount = 0,
     bookmarkMode = $bindable(false),
-    matchesOnly = $bindable(false),
     onSearch,
     onPrevMatch = () => {},
     onNextMatch = () => {},
@@ -23,7 +22,6 @@
     activeMatchIdx?: number;
     bookmarkCount?: number;
     bookmarkMode?: boolean;
-    matchesOnly?: boolean;
     onSearch: () => void;
     onPrevMatch?: () => void;
     onNextMatch?: () => void;
@@ -62,6 +60,12 @@
         bind:value={pattern}
         spellcheck="false"
         autocomplete="off"
+        onkeydown={(e) => {
+          if (e.key === "Enter" && matchCount > 0) {
+            e.preventDefault();
+            onNextMatch();
+          }
+        }}
       />
       <div class="toggles">
         {#if matchCount > 0}
@@ -105,17 +109,6 @@
         >
           Aa
         </button>
-        {#if pattern}
-          <button
-            type="button"
-            class="toggle-btn"
-            class:active={matchesOnly}
-            onclick={() => (matchesOnly = !matchesOnly)}
-            title="Show matches only (auto-enabled)"
-          >
-            ◆
-          </button>
-        {/if}
       </div>
     </div>
   </form>
