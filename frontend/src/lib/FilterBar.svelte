@@ -255,7 +255,7 @@
   .pill.level-info.active  { background: #7eb6ff; }
   .pill.level-warn.active  { background: #ffd60a; color: #1a1a1e; }
   .pill.level-error.active { background: #ff453a; }
-  .pill.level-fatal.active { background: #ff453a; }
+  .pill.level-fatal.active { background: var(--color-level-critical-badge); }
 
   .pill.bookmark-pill {
     padding: 4px 8px;

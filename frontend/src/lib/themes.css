@@ -30,9 +30,9 @@
   --color-accent: #5ba3ff;
 
   /* Log Levels */
-  --color-level-critical-bg: rgba(255, 69, 58, 0.16);
-  --color-level-critical-text: #ff6961;
-  --color-level-critical-badge: #ff453a;
+  --color-level-critical-bg: rgba(191, 90, 242, 0.16);
+  --color-level-critical-text: #d291ff;
+  --color-level-critical-badge: #bf5af2;
   --color-level-error-bg: rgba(255, 69, 58, 0.11);
   --color-level-error-text: #ff6961;
   --color-level-error-badge: rgba(255, 69, 58, 0.85);
@@ -85,9 +85,9 @@
   --color-accent: #007aff;
 
   /* Log Levels */
-  --color-level-critical-bg: rgba(255, 59, 48, 0.11);
-  --color-level-critical-text: #c5221f;
-  --color-level-critical-badge: #ff3b30;
+  --color-level-critical-bg: rgba(168, 85, 247, 0.09);
+  --color-level-critical-text: #7c3aed;
+  --color-level-critical-badge: #a855f7;
   --color-level-error-bg: rgba(255, 59, 48, 0.08);
   --color-level-error-text: #d32f2f;
   --color-level-error-badge: rgba(255, 59, 48, 0.85);
@@ -140,9 +140,9 @@
   --color-accent: #00d9ff;
 
   /* Log Levels */
-  --color-level-critical-bg: rgba(255, 32, 80, 0.18);
-  --color-level-critical-text: #ff5080;
-  --color-level-critical-badge: #ff2050;
+  --color-level-critical-bg: rgba(218, 112, 214, 0.18);
+  --color-level-critical-text: #ff88ff;
+  --color-level-critical-badge: #da70d6;
   --color-level-error-bg: rgba(255, 32, 80, 0.13);
   --color-level-error-text: #ff5080;
   --color-level-error-badge: rgba(255, 32, 80, 0.85);

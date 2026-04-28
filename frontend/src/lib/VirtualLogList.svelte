@@ -699,6 +699,10 @@
     color: var(--color-level-critical-text);
     background: var(--color-level-critical-bg);
   }
+  .level-fatal {
+    color: var(--color-level-critical-text);
+    background: var(--color-level-critical-bg);
+  }
 
   .row-table {
     display: grid;

@@ -45,6 +45,7 @@
     const bgColor = getComputedColor('--color-filter-bar-bg');
     const borderColor = getComputedColor('--color-border');
     const errorColor = getComputedColor('--color-level-error-badge');
+    const criticalColor = getComputedColor('--color-level-critical-badge');
     const warningColor = getComputedColor('--color-level-warning-badge');
     const searchColor = getComputedColor('--color-search-highlight-active');
     const followingColor = getComputedColor('--color-following');
@@ -76,7 +77,9 @@
       // Check level
       if (levelMap.has(lineNum)) {
         const level = levelMap.get(lineNum)!;
-        if (level === 'error' || level === 'fatal') {
+        if (level === 'fatal') {
+          color = criticalColor;
+        } else if (level === 'error') {
           color = errorColor;
         } else if (level === 'warn') {
           color = warningColor;
