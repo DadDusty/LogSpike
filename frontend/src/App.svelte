@@ -1,4 +1,5 @@
 <script lang="ts">
+  import "./lib/themes.css";
   import Sidebar from "./lib/Sidebar.svelte";
   import Toolbar from "./lib/Toolbar.svelte";
   import FilterBar from "./lib/FilterBar.svelte";
@@ -571,7 +572,7 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    background: var(--bg);
+    background: var(--color-window-bg);
   }
   .container {
     display: flex;
@@ -609,11 +610,11 @@
     margin: 0 0 8px 0;
     font-size: 18px;
     font-weight: 600;
-    color: var(--text);
+    color: var(--color-text-primary);
   }
   .empty p {
     margin: 0 0 24px 0;
-    color: var(--text-dim);
+    color: var(--color-text-secondary);
     font-size: 13px;
   }
   .empty-ctas {
@@ -621,8 +622,8 @@
     gap: 8px;
   }
   .empty-cta {
-    background: var(--accent);
-    color: white;
+    background: var(--color-accent);
+    color: #ffffff;
     border: none;
     padding: 8px 16px;
     border-radius: 6px;
@@ -630,6 +631,6 @@
     cursor: pointer;
   }
   .empty-cta:hover {
-    background: #0077ed;
+    opacity: 0.9;
   }
 </style>

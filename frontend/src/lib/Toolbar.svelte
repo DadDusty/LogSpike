@@ -69,16 +69,16 @@
     justify-content: space-between;
     gap: 12px;
     padding: 10px 16px;
-    background: var(--bg-elevated);
-    border-bottom: 1px solid var(--border);
+    background: var(--color-filter-bar-bg);
+    border-bottom: 1px solid var(--color-border);
     flex-shrink: 0;
   }
   .left, .right { display: flex; align-items: center; gap: 8px; }
-  
+
   .btn-group {
     display: flex;
     gap: 1px;
-    background: var(--border);
+    background: var(--color-border);
     padding: 1px;
     border-radius: 6px;
     overflow: hidden;
@@ -87,19 +87,21 @@
     border-radius: 0;
     border: none;
     margin: 0;
+    background: var(--color-card-bg);
+    color: var(--color-text-primary);
   }
   .btn-group button:first-child { border-top-left-radius: 5px; border-bottom-left-radius: 5px; }
   .btn-group button:last-child { border-top-right-radius: 5px; border-bottom-right-radius: 5px; }
 
   .primary {
-    background: var(--accent);
+    background: var(--color-accent);
     color: white;
   }
-  .primary:hover { background: #0077ed; }
+  .primary:hover { opacity: 0.9; }
 
   .segmented-control {
     display: flex;
-    background: var(--border-dim);
+    background: var(--color-border-subtle);
     padding: 2px;
     border-radius: 8px;
   }
@@ -110,11 +112,11 @@
     padding: 4px 16px;
     font-size: 12px;
     font-weight: 600;
-    color: var(--text-dim);
+    color: var(--color-text-secondary);
   }
   .segmented-control button.active {
-    background: var(--bg);
-    color: var(--text);
+    background: var(--color-window-bg);
+    color: var(--color-text-primary);
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   }
 
@@ -124,12 +126,12 @@
     font-size: 16px;
     cursor: pointer;
     padding: 4px 8px;
-    color: var(--text-dim);
+    color: var(--color-text-secondary);
     border-radius: 4px;
   }
   .theme-btn:hover {
-    color: var(--text);
-    background: var(--border-dim);
+    color: var(--color-text-primary);
+    background: var(--color-border-subtle);
   }
 
   .live-btn {
@@ -142,16 +144,16 @@
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: var(--text-dim);
+    background: var(--color-text-secondary);
   }
   .live-btn.active {
-    color: var(--accent);
-    border-color: var(--accent);
-    background: var(--accent-dim);
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+    background: rgba(91, 163, 255, 0.1);
   }
   .live-btn.active .indicator {
-    background: var(--accent);
-    box-shadow: 0 0 8px var(--accent);
+    background: var(--color-accent);
+    box-shadow: 0 0 8px var(--color-accent);
     animation: pulse 2s infinite;
   }
 
