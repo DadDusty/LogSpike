@@ -1,4 +1,4 @@
-# logspike
+# LogSpike
 
 A fast, modern, multi-platform log viewer in the spirit of CMTrace. Built on Rust + Tauri 2 with a Svelte 5 frontend.
 
@@ -127,13 +127,13 @@ cargo tauri icon path/to/source.png
 
 ## Roadmap
 
-The scaffold gets you to a working viewer with file-open, virtualised render, level coloring, regex search, and live tail. Reasonable next steps in rough priority order:
+The scaffold gets you to a working viewer with file-open, virtualised render, level coloring, regex search, live tail, search navigation with keyboard cycling, and bookmarks. Reasonable next steps in rough priority order:
 
 - Multi-tab support (the `AppState` already keys files by id, the UI just needs tabs).
-- Filter view: hide non-matching lines instead of jumping between matches.
+- Multi-file view with source column showing which file each line came from.
 - Saved filter presets and colour rules per format.
 - Multi-file tail with merge-by-timestamp.
-- Bookmarks and "jump to time".
+- "Jump to time" navigation.
 - Pluggable parsers for application-specific log formats (CMTrace XML-ish, JSON-per-line, logfmt, syslog, IIS, etc.).
 - Mobile target via Tauri 2's iOS/Android pipeline.
 
